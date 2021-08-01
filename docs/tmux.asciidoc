@@ -1,0 +1,11 @@
+= tmux
+
+Provides basic tmux integration for Kakoune.
+
+== Usage
+
+Enable tmux integration with:
+
+--------------------------------------------------------------------------------
+tmux-integration-enable
+--------------------------------------------------------------------------------
