@@ -8,23 +8,23 @@ hook -group tmux-detection global ClientCreate '.*' %{
 }
 
 define-command -override tmux-terminal-horizontal -params .. -shell-completion -docstring 'tmux-terminal-horizontal <program> [arguments]: create a new terminal to the right as a tmux pane' %{
-  tmux split-window -h -c '#{pane_current_path}' %arg{@}
+  tmux split-window -h -c '#{PWD}' %arg{@}
 }
 
 define-command -override tmux-terminal-vertical -params .. -shell-completion -docstring 'tmux-terminal-vertical <program> [arguments]: create a new terminal below as a tmux pane' %{
-  tmux split-window -v -c '#{pane_current_path}' %arg{@}
+  tmux split-window -v -c '#{PWD}' %arg{@}
 }
 
 define-command -override tmux-terminal-tab -params .. -shell-completion -docstring 'tmux-terminal-tab <program> [arguments]: create a new terminal as a tmux tab' %{
-  tmux new-window -c '#{pane_current_path}' %arg{@}
+  tmux new-window -c '#{PWD}' %arg{@}
 }
 
 define-command -override tmux-terminal-popup -params .. -shell-completion -docstring 'tmux-terminal-popup <program> [arguments]: create a new terminal as a tmux popup' %{
-  tmux display-popup -d '#{pane_current_path}' -E %arg{@}
+  tmux display-popup -d '#{PWD}' -E %arg{@}
 }
 
 define-command -override tmux-terminal-panel -params .. -shell-completion -docstring 'tmux-terminal-panel <program> [arguments]: create a new terminal as a tmux panel' %{
-  tmux split-window -h -b -l 30 -t '{left}' -c '#{pane_current_path}' %arg{@}
+  tmux split-window -h -b -l 30 -t '{left}' -c '#{PWD}' %arg{@}
 }
 
 define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
@@ -36,7 +36,7 @@ define-command -override tmux-focus -params ..1 -client-completion -docstring 't
 
 define-command -override -hidden tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
   nop %sh{
-    nohup tmux "$@" < /dev/null > /dev/null 2>&1 &
+    nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
   }
 }
 
