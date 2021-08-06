@@ -29,8 +29,7 @@ define-command -override tmux-terminal-panel -params .. -shell-completion -docst
 
 define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
   evaluate-commands -try-client %arg{1} %{
-    tmux select-window -t %val{client_env_TMUX_PANE}
-    tmux select-pane -t %val{client_env_TMUX_PANE}
+    tmux select-window -t %val{client_env_TMUX_PANE} ';' select-pane -t %val{client_env_TMUX_PANE}
   }
 }
 
