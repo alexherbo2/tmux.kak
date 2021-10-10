@@ -33,7 +33,7 @@ define-command -override tmux-focus -params ..1 -client-completion -docstring 't
   }
 }
 
-define-command -override -hidden tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
+define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
   nop %sh{
     nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
   }
