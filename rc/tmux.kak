@@ -20,7 +20,7 @@ define-command -override tmux-terminal-tab -params .. -shell-completion -docstri
 }
 
 define-command -override tmux-terminal-popup -params .. -shell-completion -docstring 'tmux-terminal-popup <program> [arguments]: create a new terminal as a tmux popup' %{
-  tmux display-popup -d '#{PWD}' -E %arg{@}
+  tmux display-popup -w 90% -h 90% -d '#{PWD}' -E %arg{@}
 }
 
 define-command -override tmux-terminal-panel -params .. -shell-completion -docstring 'tmux-terminal-panel <program> [arguments]: create a new terminal as a tmux panel' %{
