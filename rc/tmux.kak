@@ -46,8 +46,8 @@ define-command -override tmux-integration-enable -docstring 'enable tmux integra
     alias global terminal-horizontal tmux-terminal-horizontal
     alias global terminal-vertical tmux-terminal-vertical
     alias global terminal-tab tmux-terminal-tab
-    alias global popup tmux-terminal-popup
-    alias global panel tmux-terminal-panel
+    alias global terminal-popup tmux-terminal-popup
+    alias global terminal-panel tmux-terminal-panel
     alias global focus tmux-focus
   }
 }

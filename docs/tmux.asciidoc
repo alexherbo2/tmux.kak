@@ -22,6 +22,6 @@ Enable tmux integration by opening a client inside tmux, then use the window com
 - `terminal-horizontal`
 - `terminal-vertical`
 - `terminal-tab`
-- `popup`
-- `panel`
+- `terminal-popup`
+- `terminal-panel`
 - `focus`
