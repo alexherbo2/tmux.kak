@@ -21,8 +21,9 @@ define-command -override tmux-terminal-vertical -params .. -shell-completion -do
   tmux split-window -v -c '#{PWD}' %arg{@}
 }
 
+# New tab to the right
 define-command -override tmux-terminal-tab -params .. -shell-completion -docstring 'tmux-terminal-tab <program> [arguments]: create a new terminal as a tmux tab' %{
-  tmux new-window -c '#{PWD}' %arg{@}
+  tmux new-window -a -c '#{PWD}' %arg{@}
 }
 
 define-command -override tmux-terminal-popup -params .. -shell-completion -docstring 'tmux-terminal-popup <program> [arguments]: create a new terminal as a tmux popup' %{
