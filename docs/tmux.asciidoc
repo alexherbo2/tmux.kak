@@ -4,8 +4,24 @@ Provides basic tmux integration for Kakoune.
 
 == Usage
 
-Enable tmux integration with:
+Enable tmux integration by opening a client inside tmux, then use the window commands.
 
---------------------------------------------------------------------------------
-tmux-integration-enable
---------------------------------------------------------------------------------
+== Commands
+
+- `tmux`
+- `tmux-focus`
+- `tmux-terminal-horizontal`
+- `tmux-terminal-vertical`
+- `tmux-terminal-tab`
+- `tmux-terminal-popup`
+- `tmux-terminal-panel`
+
+== Aliases
+
+- `terminal`
+- `terminal-horizontal`
+- `terminal-vertical`
+- `terminal-tab`
+- `popup`
+- `panel`
+- `focus`

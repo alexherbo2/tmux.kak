@@ -7,6 +7,18 @@ hook -group tmux-detection global ClientCreate '.*' %{
   trigger-user-hook "TMUX=%val{client_env_TMUX}"
 }
 
+define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
+  nop %sh{
+    nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
+  }
+}
+
+define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
+  evaluate-commands -try-client %arg{1} %{
+    tmux select-window -t %val{client_env_TMUX_PANE} ';' select-pane -t %val{client_env_TMUX_PANE}
+  }
+}
+
 define-command -override tmux-terminal-horizontal -params .. -shell-completion -docstring 'tmux-terminal-horizontal <program> [arguments]: create a new terminal to the right as a tmux pane' %{
   tmux split-window -h -c '#{PWD}' %arg{@}
 }
@@ -27,18 +39,6 @@ define-command -override tmux-terminal-panel -params .. -shell-completion -docst
   tmux split-window -h -b -l 30 -t '{left}' -c '#{PWD}' %arg{@}
 }
 
-define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
-  evaluate-commands -try-client %arg{1} %{
-    tmux select-window -t %val{client_env_TMUX_PANE} ';' select-pane -t %val{client_env_TMUX_PANE}
-  }
-}
-
-define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
-  nop %sh{
-    nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
-  }
-}
-
 define-command -override tmux-integration-enable -docstring 'enable tmux integration' %{
   remove-hooks global tmux-integration
   hook -group tmux-integration global User 'TMUX=(.+?),(.+?),(.+?)' %{
@@ -55,3 +55,6 @@ define-command -override tmux-integration-enable -docstring 'enable tmux integra
 define-command -override tmux-integration-disable -docstring 'disable tmux integration' %{
   remove-hooks global tmux-integration
 }
+
+# Initialization
+tmux-integration-enable
