@@ -13,12 +13,6 @@ define-command -override tmux -params .. -docstring 'tmux [options] [command] [f
   }
 }
 
-define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
-  evaluate-commands -try-client %arg{1} %{
-    tmux select-window -t %val{client_env_TMUX_PANE} ';' select-pane -t %val{client_env_TMUX_PANE}
-  }
-}
-
 define-command -override tmux-terminal-horizontal -params .. -shell-completion -docstring 'tmux-terminal-horizontal <program> [arguments]: create a new terminal to the right as a tmux pane' %{
   tmux split-window -h -c '#{PWD}' %arg{@}
 }
@@ -37,6 +31,12 @@ define-command -override tmux-terminal-popup -params .. -shell-completion -docst
 
 define-command -override tmux-terminal-panel -params .. -shell-completion -docstring 'tmux-terminal-panel <program> [arguments]: create a new terminal as a tmux panel' %{
   tmux split-window -h -b -l 30 -t '{left}' -c '#{PWD}' %arg{@}
+}
+
+define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
+  evaluate-commands -try-client %arg{1} %{
+    tmux select-window -t %val{client_env_TMUX_PANE} ';' select-pane -t %val{client_env_TMUX_PANE}
+  }
 }
 
 define-command -override tmux-integration-enable -docstring 'enable tmux integration' %{

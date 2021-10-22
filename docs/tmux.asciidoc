@@ -9,12 +9,12 @@ Enable tmux integration by opening a client inside tmux, then use the window com
 == Commands
 
 - `tmux`
-- `tmux-focus`
 - `tmux-terminal-horizontal`
 - `tmux-terminal-vertical`
 - `tmux-terminal-tab`
 - `tmux-terminal-popup`
 - `tmux-terminal-panel`
+- `tmux-focus`
 
 == Aliases
 
