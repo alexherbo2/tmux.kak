@@ -6,6 +6,9 @@ remove-hooks global tmux-detection
 hook -group tmux-detection global ClientCreate '.*' %{
   trigger-user-hook "TMUX=%val{client_env_TMUX}"
 }
+hook -group tmux-detection global FocusIn '.*' %{
+  trigger-user-hook "TMUX=%val{client_env_TMUX}"
+}
 
 define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
   nop %sh{
