@@ -9,7 +9,7 @@ hook -group tmux-detection global ClientCreate '.*' %{
 
 define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
   nop %sh{
-    nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
+    TMUX=$kak_client_env_TMUX TMUX_PANE=$kak_client_env_TMUX_PANE nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
   }
 }
 
@@ -50,6 +50,11 @@ define-command -override tmux-integration-enable -docstring 'enable tmux integra
     alias global terminal-popup tmux-terminal-popup
     alias global terminal-panel tmux-terminal-panel
     alias global focus tmux-focus
+  }
+
+  # Clipboard integration
+  hook -group tmux-integration global RegisterModified '"' %{
+    tmux set-buffer -w %val{main_reg_dquote}
   }
 }
 
