@@ -12,7 +12,7 @@ hook -group tmux-detection global FocusIn '.*' %{
 
 define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
   nop %sh{
-    TMUX=$kak_client_env_TMUX TMUX_PANE=$kak_client_env_TMUX_PANE nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
+    KAKOUNE_SESSION=$kak_session KAKOUNE_CLIENT=$kak_client TMUX=$kak_client_env_TMUX TMUX_PANE=$kak_client_env_TMUX_PANE nohup tmux set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
   }
 }
 
