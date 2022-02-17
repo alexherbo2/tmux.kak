@@ -30,8 +30,7 @@ define-command -override tmux-terminal-tab -params .. -shell-completion -docstri
 }
 
 define-command -override tmux-terminal-popup -params .. -shell-completion -docstring 'tmux-terminal-popup <program> [arguments]: create a new terminal as a tmux popup' %{
-  # TODO: Replace `sh -c` command with `-e` flag.
-  tmux display-popup -w 90% -h 90% -E sh -c "KAKOUNE_SESSION=%val{session} KAKOUNE_CLIENT=%val{client} ""${@:-SHELL}""" -- %arg{@}
+  tmux display-popup -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -w 90% -h 90% -E %arg{@}
 }
 
 define-command -override tmux-terminal-panel -params .. -shell-completion -docstring 'tmux-terminal-panel <program> [arguments]: create a new terminal as a tmux panel' %{
