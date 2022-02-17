@@ -30,7 +30,8 @@ define-command -override tmux-terminal-tab -params .. -shell-completion -docstri
 }
 
 define-command -override tmux-terminal-popup -params .. -shell-completion -docstring 'tmux-terminal-popup <program> [arguments]: create a new terminal as a tmux popup' %{
-  tmux display-popup -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -w 90% -h 90% -E %arg{@}
+  # TODO: Remove -d flag.
+  tmux display-popup -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -w 90% -h 90% -d %sh{pwd} -E %arg{@}
 }
 
 define-command -override tmux-terminal-panel -params .. -shell-completion -docstring 'tmux-terminal-panel <program> [arguments]: create a new terminal as a tmux panel' %{
