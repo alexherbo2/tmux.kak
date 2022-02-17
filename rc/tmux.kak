@@ -12,29 +12,30 @@ hook -group tmux-detection global FocusIn '.*' %{
 
 define-command -override tmux -params .. -docstring 'tmux [options] [command] [flags]: open tmux' %{
   nop %sh{
-    TMUX=$kak_client_env_TMUX TMUX_PANE=$kak_client_env_TMUX_PANE nohup tmux set-environment KAKOUNE_SESSION "$kak_session" ';' set-environment KAKOUNE_CLIENT "$kak_client" ';' set-environment PWD "$PWD" ';' "$@" < /dev/null > /dev/null 2>&1 &
+    nohup tmux "$@" < /dev/null > /dev/null 2>&1 &
   }
 }
 
 define-command -override tmux-terminal-horizontal -params .. -shell-completion -docstring 'tmux-terminal-horizontal <program> [arguments]: create a new terminal to the right as a tmux pane' %{
-  tmux split-window -h -c '#{PWD}' %arg{@}
+  tmux split-window -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -h %arg{@}
 }
 
 define-command -override tmux-terminal-vertical -params .. -shell-completion -docstring 'tmux-terminal-vertical <program> [arguments]: create a new terminal below as a tmux pane' %{
-  tmux split-window -v -c '#{PWD}' %arg{@}
+  tmux split-window -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -v %arg{@}
 }
 
 # New tab to the right
 define-command -override tmux-terminal-tab -params .. -shell-completion -docstring 'tmux-terminal-tab <program> [arguments]: create a new terminal as a tmux tab' %{
-  tmux new-window -a -c '#{PWD}' %arg{@}
+  tmux new-window -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -a %arg{@}
 }
 
 define-command -override tmux-terminal-popup -params .. -shell-completion -docstring 'tmux-terminal-popup <program> [arguments]: create a new terminal as a tmux popup' %{
-  tmux display-popup -w 90% -h 90% -d '#{PWD}' -E %arg{@}
+  # TODO: Replace `sh -c` command with `-e` flag.
+  tmux display-popup -w 90% -h 90% -E sh -c "KAKOUNE_SESSION=%val{session} KAKOUNE_CLIENT=%val{client} ""${@:-SHELL}""" -- %arg{@}
 }
 
 define-command -override tmux-terminal-panel -params .. -shell-completion -docstring 'tmux-terminal-panel <program> [arguments]: create a new terminal as a tmux panel' %{
-  tmux split-window -h -b -l 30 -t '{left}' -c '#{PWD}' %arg{@}
+  tmux split-window -e "KAKOUNE_SESSION=%val{session}" -e "KAKOUNE_CLIENT=%val{client}" -h -b -l 30 -t '{left}' %arg{@}
 }
 
 define-command -override tmux-focus -params ..1 -client-completion -docstring 'tmux-focus [client]: focus the given client, or the current one.' %{
