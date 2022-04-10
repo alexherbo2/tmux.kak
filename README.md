@@ -1,10 +1,5 @@
 # tmux.kak
 
-###### [Documentation] | [Source]
-
-[Source]: rc/tmux.kak
-[Documentation]: docs/tmux.asciidoc
-
 Provides basic [tmux] integration for [Kakoune].
 
 [Kakoune]: https://kakoune.org
@@ -13,5 +8,11 @@ Provides basic [tmux] integration for [Kakoune].
 ## Installation
 
 ``` sh
-git clone https://github.com/alexherbo2/tmux.kak ~/.config/kak/autoload/tmux
+git clone https://github.com/alexherbo2/tmux.kak.git ~/.config/kak/autoload/tmux
 ```
+
+## Documentation
+
+See the [manual] for setup and usage instructions.
+
+[Manual]: docs/manual.md
